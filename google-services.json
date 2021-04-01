@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "808237832973",
+    "project_id": "animationapp-88613",
+    "storage_bucket": "animationapp-88613.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:808237832973:android:1c19b31f08728e06a32e44",
+        "android_client_info": {
+          "package_name": "com.smallgroup.animationapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "808237832973-rl2rojjcvq2mtbr970a0mmet20kj8bec.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEvn8EV7RLH80pDiU8ErKUpQrEfxcRFcA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "808237832973-rl2rojjcvq2mtbr970a0mmet20kj8bec.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
