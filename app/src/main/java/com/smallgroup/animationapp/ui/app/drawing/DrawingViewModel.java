@@ -22,22 +22,20 @@ import static com.arthenica.mobileffmpeg.Config.RETURN_CODE_SUCCESS;
 
 public class DrawingViewModel extends AndroidViewModel {
 
-    private FileManager fileManager;
+    private final FileManager fileManager;
 
     public DrawingViewModel(@NonNull Application application) {
         super(application);
-        fileManager = new FileManager(
-                getApplication()
-        );
+        fileManager = new FileManager(getApplication());
     }
 
     public void save(ArrayList<Bitmap> bitmapArrayList) {
         //TODO
         //Save in BD
 
-        for (int i = 0; i < bitmapArrayList.size(); i++) {
+        for (int i = 1; i <= bitmapArrayList.size(); i++) {
             fileManager.saveBitmap(
-                    bitmapArrayList.get(i),
+                    bitmapArrayList.get(i-1),
                     "img00" + i
             );
         }
@@ -45,10 +43,13 @@ public class DrawingViewModel extends AndroidViewModel {
 
     public void buildVideo(String title, int fps) {
 
-        String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Anime";
-
-        String pictures = dirPath + File.separator + "img%02d.png";
+        //path of app folder
+        String dirPath = fileManager.getVideoFolderPath();
+        //pattern of path img
+        String pictures = dirPath + File.separator + "img%03d.png";
+        //path of video
         String out = fileManager.createVideo(title);
+
         String[] cmd= new String[]{"-framerate", String.valueOf(fps), "-i", pictures, "-vf", "scale=720:720", "-y", out};
 
         long executionId = FFmpeg.executeAsync(cmd, new ExecuteCallback() {

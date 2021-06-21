@@ -71,7 +71,11 @@ public class DrawingActivity extends BaseActivity {
                 binding.toolbar.setVisibility(View.VISIBLE);
         });
         binding.saveProject.setOnClickListener(v -> {
-            binding.drawingView.save(this);
+            binding.drawingView.clearAndSaveBitmap();
+            drawingViewModel.save(
+                    binding.drawingView.getListBitmaps()
+            );
+            drawingViewModel.buildVideo("Hello", 3);
         });
         binding.newFrame.setOnClickListener(v -> {
             binding.drawingView.clearAndSaveBitmap();

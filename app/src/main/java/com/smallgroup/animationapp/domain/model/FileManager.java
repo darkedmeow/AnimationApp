@@ -10,9 +10,16 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 
+import com.arthenica.mobileffmpeg.Config;
+import com.arthenica.mobileffmpeg.ExecuteCallback;
+import com.arthenica.mobileffmpeg.FFmpeg;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import static com.arthenica.mobileffmpeg.Config.RETURN_CODE_CANCEL;
+import static com.arthenica.mobileffmpeg.Config.RETURN_CODE_SUCCESS;
 
 public class FileManager {
 
@@ -24,23 +31,23 @@ public class FileManager {
 
     public FileManager(Context context) {
         this.context = context;
-        videoFolder = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_MOVIES).getAbsolutePath() + appDirectoryName);
+        videoFolder = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + appDirectoryName);
         if (!videoFolder.exists()){
             videoFolder.mkdirs();
         }
     }
 
+    public String getVideoFolderPath() {
+        return videoFolder.getAbsolutePath();
+    }
 
     public String createVideo(String title) {
-        final String filePath;
         String fileExtn = ".mp4";
 
+        File videoFile = new File(videoFolder + "/" + title + fileExtn);
+
         ContentValues valuesvideos = new ContentValues();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            valuesvideos.put(MediaStore.Video.Media.RELATIVE_PATH, videoFolder.getAbsolutePath());
-            valuesvideos.put(MediaStore.Video.Media.DATE_TAKEN, System.currentTimeMillis());
-        }
+        valuesvideos.put(MediaStore.Video.Media.DATA, videoFile.getAbsolutePath());
         valuesvideos.put(MediaStore.Video.Media.TITLE, title);
         valuesvideos.put(MediaStore.Video.Media.DISPLAY_NAME, title + fileExtn);
         valuesvideos.put(MediaStore.Video.Media.MIME_TYPE, "video/mp4");
@@ -48,8 +55,8 @@ public class FileManager {
         Uri uri = context.getContentResolver().insert(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, valuesvideos);
 
         // get the path of the video file created in the storage.
-        filePath = getRealPathFromUR(uri);
-        return filePath;
+        return videoFile.getAbsolutePath();
+        //return getRealPathFromUR(uri);
         }
 
     public String getRealPathFromUR(Uri contentUri) {
@@ -57,7 +64,13 @@ public class FileManager {
         try {
             String[] proj = { MediaStore.Images.Media.DATA };
             cursor = context.getContentResolver().query(contentUri,  proj, null, null, null);
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            int column_index = 0;
+            if (cursor != null) {
+                column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            }
+            else{
+                Log.e("CURSOR", "error");
+            }
             cursor.moveToFirst();
             return cursor.getString(column_index);
         } catch (Exception e) {
@@ -70,8 +83,9 @@ public class FileManager {
         }
     }
 
+
     public void saveBitmap(Bitmap bitmap, String title){
-        String path = "" + "/"+ title +".png";
+        String path = videoFolder + "/"+ title +".png";
         if(bitmap!=null){
             try {
                 FileOutputStream outputStream = null;
