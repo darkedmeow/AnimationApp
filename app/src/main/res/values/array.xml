@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="bright_pink">#1AFF007F</color>
+    <color name="red">#1AFF0000</color>
+    <color name="rorange">#1AFF7F00</color>
+    <color name="yellow">#1AFFFF00</color>
+    <color name="chartreuse">#1A7FFF00</color>
+    <color name="green">#1A00FF00</color>
+    <color name="spring_green">#1A00FF7F</color>
+    <color name="cyan">#1A00FFFF</color>
+    <color name="azure">#1A007FFF</color>
+    <color name="blue">#1A0000FF</color>
+    <color name="violet">#1A7F00FF</color>
+    <color name="magenta">#1AFF00FF</color>
+    
+    <array name="colors">
+        <item>@color/bright_pink</item>
+        <item>@color/red</item>
+        <item>@color/rorange</item>
+        <item>@color/yellow</item>
+        <item>@color/chartreuse</item>
+        <item>@color/green</item>
+        <item>@color/spring_green</item>
+        <item>@color/cyan</item>
+        <item>@color/azure</item>
+        <item>@color/blue</item>
+        <item>@color/violet</item>
+        <item>@color/magenta</item>
+    </array>
+
+
+</resources>

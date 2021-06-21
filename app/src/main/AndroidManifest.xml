@@ -2,7 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.smallgroup.animationapp">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <application
+        android:requestLegacyExternalStorage="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -10,19 +14,35 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AnimationApp">
         <activity
-            android:name=".ui.auth.SplashActivity"
+            android:name=".ui.app.drawing.DrawingActivity"
             android:screenOrientation="landscape">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <activity
-            android:name=".ui.app.MainAppActivity"
-            android:screenOrientation="landscape" />
+            android:name=".ui.app.ProjectCreationActivity"
+            android:screenOrientation="landscape">
+
+        </activity>
+        <activity
+            android:name=".ui.auth.SplashActivity"
+            android:screenOrientation="landscape">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+        <activity
+            android:name=".ui.app.MenuActivity"
+            android:screenOrientation="landscape">
+
+        </activity>
         <activity
             android:name=".ui.auth.AuthActivity"
             android:screenOrientation="landscape">
+
         </activity>
     </application>
 

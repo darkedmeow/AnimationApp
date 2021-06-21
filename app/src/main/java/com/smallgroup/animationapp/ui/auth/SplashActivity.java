@@ -9,7 +9,7 @@ import android.view.WindowManager;
 
 import com.smallgroup.animationapp.R;
 import com.smallgroup.animationapp.domain.model.User;
-import com.smallgroup.animationapp.ui.app.MainAppActivity;
+import com.smallgroup.animationapp.ui.app.MenuActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -57,7 +57,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void goToMainAppActivity(User user) {
-        Intent intent = new Intent(this, MainAppActivity.class);
+        Intent intent = new Intent(this, MenuActivity.class);
         intent.putExtra(USER, user);
         startActivity(intent);
         finish();

@@ -20,15 +20,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.smallgroup.animationapp.R;
-import com.smallgroup.animationapp.databinding.ActivityMainBinding;
+import com.smallgroup.animationapp.databinding.ActivityAuthBinding;
 import com.smallgroup.animationapp.domain.model.User;
-import com.smallgroup.animationapp.ui.app.MainAppActivity;
+import com.smallgroup.animationapp.ui.app.MenuActivity;
 
 public class AuthActivity extends AppCompatActivity {
 
     private static final String USER = "CURRENT USER";
     private AuthViewModel authViewModel;
-    private ActivityMainBinding binding;
+    private ActivityAuthBinding binding;
     private GoogleSignInClient googleSignInClient;
     private static final int RC_SIGN_IN = 9001;
 
@@ -46,7 +46,7 @@ public class AuthActivity extends AppCompatActivity {
     }
 
     private void initBinding() {
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_auth);
 
     }
 
@@ -123,7 +123,7 @@ public class AuthActivity extends AppCompatActivity {
     }
 
     private void goToAppActivity(User user) {
-        Intent intent = new Intent(this, MainAppActivity.class);
+        Intent intent = new Intent(this, MenuActivity.class);
         intent.putExtra(USER, user);
         startActivity(intent);
         finish();
