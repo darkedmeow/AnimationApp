@@ -13,6 +13,7 @@ import android.view.WindowManager;
 
 import com.smallgroup.animationapp.R;
 import com.smallgroup.animationapp.databinding.ActivityProjectCreationBinding;
+import com.smallgroup.animationapp.domain.model.ProjectSetting;
 import com.smallgroup.animationapp.ui.BaseActivity;
 import com.smallgroup.animationapp.ui.app.drawing.DrawingActivity;
 
@@ -25,17 +26,18 @@ public class ProjectCreationActivity extends BaseActivity {
 
     private FonRecyclerViewAdapter adapter;
     Activity context;
+    private FonRecyclerViewAdapter.OnColorClickListener onColorClickListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        context = this;
+
         initBinding();
         initViewModel();
         initListeners();
-        context = this;
-
 
         projectCreationViewModel.populateList(
                 this.getResources().getIntArray(R.array.colors)
@@ -44,7 +46,7 @@ public class ProjectCreationActivity extends BaseActivity {
         projectCreationViewModel.colorsLiveData.observe(this, new Observer<ArrayList<Integer>>() {
             @Override
             public void onChanged(ArrayList<Integer> integers) {
-                adapter = new FonRecyclerViewAdapter(context, integers);
+                adapter = new FonRecyclerViewAdapter(context, integers, onColorClickListener);
                 //take out
                 binding.rvFons.setLayoutManager(new GridLayoutManager(context, 3));
                 binding.rvFons.setAdapter(adapter);
@@ -64,8 +66,18 @@ public class ProjectCreationActivity extends BaseActivity {
 
     private void initListeners() {
         binding.createBtn.setOnClickListener(v -> {
+            showMessage(projectCreationViewModel.info());
             Intent intent = new Intent(this, DrawingActivity.class);
             startActivity(intent);
         });
+
+        //select color
+        onColorClickListener = new FonRecyclerViewAdapter.OnColorClickListener() {
+            @Override
+            public void onColorSelect(int color, int position) {
+                showMessage("Select color " + color);
+                projectCreationViewModel.setColor(color);
+            }
+        };
     }
 }

@@ -42,7 +42,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (projectPreview.getImgIcon() != null)
             viewViewHolder.iconImg.setImageURI(projectPreview.getImgIcon());
         else {
-            viewViewHolder.iconImg.setImageDrawable(context.getDrawable(R.drawable.ic_no_icon_24));
+            viewViewHolder.iconImg.setImageResource(R.drawable.ic_baseline_no_photography_24);
         }
 
     }

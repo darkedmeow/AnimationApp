@@ -15,6 +15,7 @@
     <color name="magenta">#1AFF00FF</color>
     
     <array name="colors">
+        <item>@color/white</item>
         <item>@color/bright_pink</item>
         <item>@color/red</item>
         <item>@color/rorange</item>

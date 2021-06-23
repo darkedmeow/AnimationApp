@@ -25,32 +25,32 @@
 
             <ImageView
                 android:id="@+id/undo"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="5dp"
-                android:src="@drawable/ic_no_icon_24"/>
+                android:src="@drawable/icons8_arrow_left_100"/>
 
             <ImageView
                 android:id="@+id/redo"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="5dp"
-                android:src="@drawable/ic_no_icon_24"/>
+                android:src="@drawable/icons8_arrow_100"/>
 
             <ImageView
                 android:id="@+id/hide_editbar"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="5dp"
-                android:src="@drawable/ic_no_icon_24"/>
+                android:src="@drawable/icons8_eye_64"/>
 
             <ImageView
                 android:id="@+id/save_project"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="5dp"
                 android:layout_marginEnd="50dp"
-                android:src="@drawable/ic_baseline_settings_24"/>
+                android:src="@drawable/icons8_copy_64"/>
 
 
         </LinearLayout>
@@ -80,7 +80,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
-                android:src="@drawable/ic_no_icon_24"/>
+                android:src="@drawable/icons8_paint_brush_64"/>
 
             <ImageView
                 android:id="@+id/pencil"
@@ -88,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="5dp"
                 android:layout_weight="1"
-                android:src="@drawable/ic_no_icon_24"/>
+                android:src="@drawable/icons8_pencil_64"/>
 
             <ImageView
                 android:id="@+id/erase"
@@ -96,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="5dp"
                 android:layout_weight="1"
-                android:src="@drawable/ic_no_icon_24"/>
+                android:src="@drawable/icons8_eraser_64"/>
 
             <ImageView
                 android:id="@+id/shapes"
@@ -112,7 +112,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="5dp"
                 android:layout_weight="1"
-                android:src="@drawable/ic_baseline_settings_24"/>
+                android:src="@drawable/icons8_diversity_64"/>
 
         </LinearLayout>
 

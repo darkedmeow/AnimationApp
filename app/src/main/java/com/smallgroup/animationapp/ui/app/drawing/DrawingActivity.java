@@ -57,18 +57,20 @@ public class DrawingActivity extends BaseActivity {
     private void initListeners() {
 
         binding.undo.setOnClickListener(v -> {
-            String pictures =
-                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath()+
-                    File.separator + "img%02d.png";
-            Log.i("PATH", pictures);
+            showMessage("undo");
         });
         binding.redo.setOnClickListener(v -> showMessage("redo"));
         binding.hideEditbar.setOnClickListener(v ->
         {
-            if (binding.toolbar.getVisibility() == View.VISIBLE)
-                binding.toolbar.setVisibility(View.INVISIBLE);
+            if (binding.editbar.getVisibility() == View.VISIBLE) {
+                binding.hideEditbar.setImageResource(R.drawable.icons8_closed_eye_64);
+                binding.editbar.setVisibility(View.INVISIBLE);
+            }
             else
-                binding.toolbar.setVisibility(View.VISIBLE);
+            {
+                binding.hideEditbar.setImageResource(R.drawable.icons8_eye_64);
+                binding.editbar.setVisibility(View.VISIBLE);
+            }
         });
         binding.saveProject.setOnClickListener(v -> {
             binding.drawingView.clearAndSaveBitmap();

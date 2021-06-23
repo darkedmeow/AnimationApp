@@ -2,19 +2,15 @@ package com.smallgroup.animationapp.ui.app;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.graphics.ColorUtils;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.smallgroup.animationapp.R;
-import com.smallgroup.animationapp.domain.model.ProjectPreview;
 
 import java.util.ArrayList;
 
@@ -22,26 +18,52 @@ public class FonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     Activity context;
     ArrayList<Integer> colors;
+    private int selectedPosition = 0;
 
-    public FonRecyclerViewAdapter(Activity context, ArrayList<Integer> colors) {
+    private final OnColorClickListener onColorClickListener;
+
+    interface OnColorClickListener {
+        void onColorSelect(int color, int position);
+    }
+
+    public FonRecyclerViewAdapter(Activity context, ArrayList<Integer> colors, OnColorClickListener onColorClickListener) {
         this.context = context;
         this.colors = colors;
+        this.onColorClickListener = onColorClickListener;
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View rootView = LayoutInflater.from(context).inflate(R.layout.item_fon, parent, false);
-        return new RecyclerViewViewHolder(rootView);
+        return new RecyclerViewHolder(rootView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
         int color = colors.get(position);
-        RecyclerViewViewHolder viewViewHolder = (RecyclerViewViewHolder) holder;
+        RecyclerViewHolder viewHolder = (RecyclerViewHolder) holder;
 
-        viewViewHolder.color.setBackgroundColor(color);
+        viewHolder.colorView.setBackgroundColor(color);
+
+        if (selectedPosition == position) {
+            viewHolder.itemView.setSelected(true);
+            viewHolder.selected.setVisibility(View.VISIBLE);
+        }
+        else {
+            viewHolder.itemView.setSelected(false);
+            viewHolder.selected.setVisibility(View.INVISIBLE);
+        }
+
+        viewHolder.colorView.setOnClickListener(v -> {
+            if (selectedPosition >= 0) {
+                onColorClickListener.onColorSelect(color, position);
+                notifyItemChanged(selectedPosition);
+            }
+            selectedPosition = viewHolder.getAdapterPosition();
+            notifyItemChanged(selectedPosition);
+        });
 
     }
 
@@ -50,13 +72,15 @@ public class FonRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         return colors.size();
     }
 
-    class RecyclerViewViewHolder extends RecyclerView.ViewHolder {
+    class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView color;
+        ImageView colorView;
+        ImageView selected;
 
-        public RecyclerViewViewHolder(@NonNull View itemView) {
+        public RecyclerViewHolder(@NonNull View itemView) {
             super(itemView);
-            color = itemView.findViewById(R.id.color);
+            colorView = itemView.findViewById(R.id.color);
+            selected = itemView.findViewById(R.id.selected);
         }
     }
 }
