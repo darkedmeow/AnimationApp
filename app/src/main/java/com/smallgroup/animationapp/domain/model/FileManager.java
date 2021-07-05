@@ -15,6 +15,7 @@ import com.arthenica.mobileffmpeg.ExecuteCallback;
 import com.arthenica.mobileffmpeg.FFmpeg;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -59,6 +60,7 @@ public class FileManager {
         //return getRealPathFromUR(uri);
         }
 
+
     public String getRealPathFromUR(Uri contentUri) {
         Cursor cursor = null;
         try {
@@ -83,6 +85,15 @@ public class FileManager {
         }
     }
 
+    public void deleteTempImg() {
+        String[] files = videoFolder.list();
+        String reg = "^.*\\.png$";
+        for (String file : files) {
+            if (file.matches(reg)) {
+                new File(videoFolder, file).delete();
+            }
+        }
+    }
 
     public void saveBitmap(Bitmap bitmap, String title){
         String path = videoFolder + "/"+ title +".png";

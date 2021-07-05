@@ -29,16 +29,12 @@ public class MenuViewModel extends ViewModel {
 
     private void populateList() {
         ProjectPreview project = new ProjectPreview();
-        project.setTitle("Test");
+        project.setTitle("Мой");
+        ProjectPreview blank = new ProjectPreview();
+        blank.setTitle("Blank");
 
         projectsList.add(project);
-        projectsList.add(project);
-        projectsList.add(project);
-        projectsList.add(project);
-        projectsList.add(project);
-        projectsList.add(project);
-        projectsList.add(project);
-        projectsList.add(project);
+        projectsList.add(blank);
 
     }
 

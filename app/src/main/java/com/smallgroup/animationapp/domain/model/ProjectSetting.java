@@ -1,6 +1,8 @@
 package com.smallgroup.animationapp.domain.model;
 
-public class ProjectSetting {
+import java.io.Serializable;
+
+public class ProjectSetting implements Serializable {
 
     public String title;
     public int fps;

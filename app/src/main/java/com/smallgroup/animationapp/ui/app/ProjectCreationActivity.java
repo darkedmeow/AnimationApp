@@ -66,8 +66,24 @@ public class ProjectCreationActivity extends BaseActivity {
 
     private void initListeners() {
         binding.createBtn.setOnClickListener(v -> {
-            showMessage(projectCreationViewModel.info());
+            //showMessage(projectCreationViewModel.info());
             Intent intent = new Intent(this, DrawingActivity.class);
+            intent.putExtra(
+                    ProjectSetting.class.getSimpleName(),
+                    projectCreationViewModel.setting.getValue()
+            );
+//            intent.putExtra(
+//                    "title",
+//                    projectCreationViewModel.setting.getValue().title
+//            );
+//            intent.putExtra(
+//                    "fps",
+//                    projectCreationViewModel.setting.getValue().fps
+//            );
+//            intent.putExtra(
+//                    "color",
+//                    projectCreationViewModel.setting.getValue().getColor()
+//            );
             startActivity(intent);
         });
 
@@ -75,7 +91,7 @@ public class ProjectCreationActivity extends BaseActivity {
         onColorClickListener = new FonRecyclerViewAdapter.OnColorClickListener() {
             @Override
             public void onColorSelect(int color, int position) {
-                showMessage("Select color " + color);
+                //showMessage("Select color " + color);
                 projectCreationViewModel.setColor(color);
             }
         };
