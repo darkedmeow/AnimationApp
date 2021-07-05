@@ -5,9 +5,12 @@ import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -24,6 +27,7 @@ import com.smallgroup.animationapp.ui.app.MenuViewModel;
 import com.smallgroup.animationapp.ui.app.video.VideoPlayerActivity;
 
 import java.io.File;
+import java.util.ArrayList;
 
 
 public class DrawingActivity extends BaseActivity {
@@ -32,6 +36,7 @@ public class DrawingActivity extends BaseActivity {
     private DrawingViewModel drawingViewModel;
 
     private ProjectSetting setting;
+    private FrameRVAdapter adapter;
 
     private static final int YOUR_PERMISSION_STATIC_CODE_IDENTIFIER = 101;
 
@@ -55,6 +60,12 @@ public class DrawingActivity extends BaseActivity {
             binding.drawingView.setBackgroundColor(setting.getColor());
         }
 
+
+        binding.framesList.setLayoutManager(
+                new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
+        );
+
+
     }
 
     private void initBinding() {
@@ -73,6 +84,16 @@ public class DrawingActivity extends BaseActivity {
         //undo
         binding.undo.setOnClickListener(v -> {
             showMessage("undo");
+
+            ArrayList<Bitmap> bitmaps = binding.drawingView.getListBitmaps();
+            Log.d("SIZE", "size = " + bitmaps.size());
+
+            adapter = new FrameRVAdapter(
+                    this,
+                    bitmaps
+            );
+            binding.framesList.setAdapter(adapter);
+
         });
         //redo
         binding.redo.setOnClickListener(v -> showMessage("redo"));
@@ -103,6 +124,8 @@ public class DrawingActivity extends BaseActivity {
         //new frame
         binding.newFrame.setOnClickListener(v -> {
             binding.drawingView.clearAndSaveBitmap();
+
+
         });
         //erase
         binding.erase.setOnClickListener(v -> binding.drawingView.setErase(true));

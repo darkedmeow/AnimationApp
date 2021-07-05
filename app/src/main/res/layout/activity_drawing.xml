@@ -126,12 +126,21 @@
             android:id="@+id/new_frame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="30dp"
+            android:layout_marginBottom="80dp"
+            android:layout_marginEnd="10dp"
             android:src="@drawable/ic_baseline_add_24"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:contentDescription="new frame" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/frames_list"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="6dp"/>
 
     </RelativeLayout>
 
