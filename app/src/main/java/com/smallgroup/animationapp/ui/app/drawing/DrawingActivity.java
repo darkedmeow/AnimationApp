@@ -38,6 +38,10 @@ public class DrawingActivity extends BaseActivity {
     private ProjectSetting setting;
     private FrameRVAdapter adapter;
 
+    private Bundle bundle;
+
+    private ArrayList<Bitmap> testList;
+
     private static final int YOUR_PERMISSION_STATIC_CODE_IDENTIFIER = 101;
 
     @Override
@@ -51,21 +55,36 @@ public class DrawingActivity extends BaseActivity {
         initBinding();
         initDrawingViewModel();
         initListeners();
+        getSetting();
+        initAdapters();
 
-        Bundle bundle = getIntent().getExtras();
 
+
+
+    }
+
+    private void initAdapters() {
+
+        testList = new ArrayList<Bitmap>();
+
+        binding.framesList.setLayoutManager(
+                new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
+        );
+        adapter = new FrameRVAdapter(
+                this,
+                testList
+        );
+        binding.framesList.setAdapter(adapter);
+
+    }
+
+    private void getSetting() {
+        bundle = getIntent().getExtras();
 
         if (bundle != null) {
             setting = (ProjectSetting) bundle.get(ProjectSetting.class.getSimpleName());
             binding.drawingView.setBackgroundColor(setting.getColor());
         }
-
-
-        binding.framesList.setLayoutManager(
-                new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
-        );
-
-
     }
 
     private void initBinding() {
@@ -85,18 +104,20 @@ public class DrawingActivity extends BaseActivity {
         binding.undo.setOnClickListener(v -> {
             showMessage("undo");
 
-            ArrayList<Bitmap> bitmaps = binding.drawingView.getListBitmaps();
-            Log.d("SIZE", "size = " + bitmaps.size());
+            testList.addAll(binding.drawingView.getListBitmaps());
 
-            adapter = new FrameRVAdapter(
-                    this,
-                    bitmaps
-            );
-            binding.framesList.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+
+            binding.drawingView.undo();
+
 
         });
         //redo
-        binding.redo.setOnClickListener(v -> showMessage("redo"));
+        binding.redo.setOnClickListener(v -> {
+            showMessage("redo");
+            binding.drawingView.redo();
+
+        });
         //show/hide
         binding.hideEditbar.setOnClickListener(v ->
         {
@@ -131,12 +152,10 @@ public class DrawingActivity extends BaseActivity {
         binding.erase.setOnClickListener(v -> binding.drawingView.setErase(true));
         //brush
         binding.brush.setOnClickListener(v -> {
-            binding.drawingView.setErase(false);
             binding.drawingView.brush();
         });
         //pen
         binding.pencil.setOnClickListener(v -> {
-            binding.drawingView.setErase(false);
             binding.drawingView.pen();
         });
 

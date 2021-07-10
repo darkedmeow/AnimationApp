@@ -22,17 +22,19 @@ public class DrawingView extends View {
 
     private ArrayList<Bitmap> listBitmaps;
     private ArrayList<Path> paths;
+    private ArrayList<Path> tempPaths;
 
-    private int backgroundColor = Color.WHITE;
-    private int paintColor = Color.BLUE;
-    private int strokeWidth = 20;
+    private int backgroundColor;
+    private int paintColor;
+    private int strokeWidth;
 
     private Path drawPath;
     private Paint drawPaint, canvasPaint;
     private Canvas drawCanvas;
     private Bitmap canvasBitmap;
 
-    private boolean erase = false;
+    private boolean erase;
+    private boolean isCanRedo;
 
     public DrawingView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -44,6 +46,8 @@ public class DrawingView extends View {
     private void init() {
         listBitmaps = new ArrayList<>();
         paths = new ArrayList<>();
+        tempPaths = new ArrayList<>();
+        paths.add(new Path());
     }
 
     public ArrayList<Bitmap> getListBitmaps() {
@@ -54,6 +58,12 @@ public class DrawingView extends View {
 
         drawPath = new Path();
         drawPaint = new Paint();
+
+        backgroundColor = Color.WHITE;
+        paintColor = Color.BLUE;
+        strokeWidth = 20;
+        erase = false;
+        isCanRedo = false;
 
         drawPaint.setColor(paintColor);
 
@@ -80,9 +90,15 @@ public class DrawingView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-
         canvas.drawBitmap(canvasBitmap, 0, 0, canvasPaint);
-        canvas.drawPath(drawPath, drawPaint);
+        canvas.drawColor(backgroundColor);
+        for (Path cur : paths) {
+            canvas.drawPath(cur, drawPaint);
+        }
+        for (Path tmpPath : tempPaths) {
+            canvas.drawPath(tmpPath, drawPaint);
+        }
+        //canvas.drawPath(drawPath, drawPaint);
     }
 
     @Override
@@ -100,11 +116,15 @@ public class DrawingView extends View {
                 break;
             case MotionEvent.ACTION_UP:
                 drawCanvas.drawPath(drawPath, drawPaint);
+                paths.add(new Path(drawPath));
+                tempPaths.clear();
                 drawPath.reset();
                 break;
             default:
                 return false;
         }
+
+        tempPaths.add(new Path(drawPath));
 
         invalidate();
         return true;
@@ -132,11 +152,30 @@ public class DrawingView extends View {
     }
 
     public void brush() {
+        setErase(false);
         drawPaint.setColor(paintColor);
         drawPaint.setStrokeWidth(strokeWidth);
     }
 
+    public void undo() {
+        if (paths.size() > 1) {
+            isCanRedo = true;
+            drawPath = paths.get(paths.size() - 1);
+            paths.remove(paths.size() - 1);
+            invalidate();
+        }
+    }
+
+    public void redo() {
+        if (isCanRedo) {
+            paths.add(new Path(drawPath));
+            isCanRedo = false;
+            invalidate();
+        }
+    }
+
     public void pen() {
+        setErase(false);
         drawPaint.setStrokeWidth(10);
         drawPaint.setColor(Color.BLACK);
     }
