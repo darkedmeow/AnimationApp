@@ -102,19 +102,12 @@ public class DrawingActivity extends BaseActivity {
 
         //undo
         binding.undo.setOnClickListener(v -> {
-            showMessage("undo");
-
-            testList.addAll(binding.drawingView.getListBitmaps());
-
-            adapter.notifyDataSetChanged();
-
+            //showMessage("undo");
             binding.drawingView.undo();
-
-
         });
         //redo
         binding.redo.setOnClickListener(v -> {
-            showMessage("redo");
+            //showMessage("redo");
             binding.drawingView.redo();
 
         });
@@ -125,12 +118,14 @@ public class DrawingActivity extends BaseActivity {
                 binding.hideEditbar.setImageResource(R.drawable.icons8_closed_eye_64);
                 binding.editbar.setVisibility(View.INVISIBLE);
                 binding.newFrame.setVisibility(View.GONE);
+                binding.framesList.setVisibility(View.GONE);
             }
             else
             {
                 binding.hideEditbar.setImageResource(R.drawable.icons8_eye_64);
                 binding.editbar.setVisibility(View.VISIBLE);
                 binding.newFrame.setVisibility(View.VISIBLE);
+                binding.framesList.setVisibility(View.VISIBLE);
             }
         });
         //saving and video building
@@ -145,7 +140,9 @@ public class DrawingActivity extends BaseActivity {
         //new frame
         binding.newFrame.setOnClickListener(v -> {
             binding.drawingView.clearAndSaveBitmap();
-
+            testList.clear();
+            testList.addAll(binding.drawingView.getListBitmaps());
+            adapter.notifyDataSetChanged();
 
         });
         //erase

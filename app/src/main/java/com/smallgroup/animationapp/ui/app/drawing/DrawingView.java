@@ -22,13 +22,17 @@ public class DrawingView extends View {
 
     private ArrayList<Bitmap> listBitmaps;
     private ArrayList<Path> paths;
+    private ArrayList<Path> prevPaths;
     private ArrayList<Path> tempPaths;
 
     private int backgroundColor;
     private int paintColor;
     private int strokeWidth;
+    private int opacity = 127;
 
     private Path drawPath;
+    private Path redoPath;
+    private Paint prevFramePaint;
     private Paint drawPaint, canvasPaint;
     private Canvas drawCanvas;
     private Bitmap canvasBitmap;
@@ -47,6 +51,7 @@ public class DrawingView extends View {
         listBitmaps = new ArrayList<>();
         paths = new ArrayList<>();
         tempPaths = new ArrayList<>();
+        prevPaths = new ArrayList<>();
         paths.add(new Path());
     }
 
@@ -58,6 +63,7 @@ public class DrawingView extends View {
 
         drawPath = new Path();
         drawPaint = new Paint();
+        prevFramePaint = new Paint();
 
         backgroundColor = Color.WHITE;
         paintColor = Color.BLUE;
@@ -73,6 +79,9 @@ public class DrawingView extends View {
         drawPaint.setStrokeJoin(Paint.Join.ROUND);
         drawPaint.setStrokeCap(Paint.Cap.ROUND);
 
+        prevFramePaint.set(drawPaint);
+        prevFramePaint.setAlpha(opacity);
+
         canvasPaint = new Paint(Paint.DITHER_FLAG);
     }
 
@@ -82,6 +91,16 @@ public class DrawingView extends View {
         listBitmaps.add(Bitmap.createBitmap(canvasBitmap));
         //COLOR FON
         canvasBitmap.eraseColor(backgroundColor);
+
+        redoPath = new Path();
+        isCanRedo = false;
+
+        prevPaths.clear();
+        prevPaths.addAll(paths);
+
+        paths.clear();
+        paths.add(new Path());
+
         invalidate();
     }
 
@@ -91,9 +110,12 @@ public class DrawingView extends View {
         super.onDraw(canvas);
 
         canvas.drawBitmap(canvasBitmap, 0, 0, canvasPaint);
-        canvas.drawColor(backgroundColor);
+        //canvas.drawColor(backgroundColor);
+        for (Path prev: prevPaths) {
+            canvas.drawPath(prev, prevFramePaint);
+        }
         for (Path cur : paths) {
-            canvas.drawPath(cur, drawPaint);
+            drawCanvas.drawPath(cur, drawPaint);
         }
         for (Path tmpPath : tempPaths) {
             canvas.drawPath(tmpPath, drawPaint);
@@ -134,7 +156,6 @@ public class DrawingView extends View {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         canvasBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-
         //COLOR FON
         canvasBitmap.eraseColor(backgroundColor);
 
@@ -160,15 +181,16 @@ public class DrawingView extends View {
     public void undo() {
         if (paths.size() > 1) {
             isCanRedo = true;
-            drawPath = paths.get(paths.size() - 1);
+            redoPath = paths.get(paths.size() - 1);
             paths.remove(paths.size() - 1);
+            drawCanvas.drawColor(backgroundColor);
             invalidate();
         }
     }
 
     public void redo() {
         if (isCanRedo) {
-            paths.add(new Path(drawPath));
+            paths.add(new Path(redoPath));
             isCanRedo = false;
             invalidate();
         }
