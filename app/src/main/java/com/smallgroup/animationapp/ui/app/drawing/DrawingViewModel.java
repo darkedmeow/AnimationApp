@@ -2,19 +2,16 @@ package com.smallgroup.animationapp.ui.app.drawing;
 
 import android.app.Application;
 import android.graphics.Bitmap;
-import android.os.Environment;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.arthenica.mobileffmpeg.Config;
 import com.arthenica.mobileffmpeg.ExecuteCallback;
 import com.arthenica.mobileffmpeg.FFmpeg;
 import com.smallgroup.animationapp.domain.model.FileManager;
-import com.smallgroup.animationapp.domain.model.ProjectSetting;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -31,6 +28,7 @@ public class DrawingViewModel extends AndroidViewModel {
         super(application);
         fileManager = new FileManager(getApplication());
     }
+
 
     public void save(ArrayList<Bitmap> bitmapArrayList) {
         //TODO
