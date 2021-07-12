@@ -33,6 +33,7 @@ public class DrawingActivity extends BaseActivity {
 
     private ProjectSetting setting;
     private FrameRVAdapter adapter;
+    private FrameRVAdapter.OnAddFrameClickListener onAddFrameClickListener;
 
     private Bundle bundle;
 
@@ -63,12 +64,14 @@ public class DrawingActivity extends BaseActivity {
 
         testList = new ArrayList<Bitmap>();
 
+        binding.framesList.setNestedScrollingEnabled(false);
         binding.framesList.setLayoutManager(
                 new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
         );
         adapter = new FrameRVAdapter(
                 this,
-                testList
+                testList,
+                onAddFrameClickListener
         );
         binding.framesList.setAdapter(adapter);
 
@@ -122,14 +125,6 @@ public class DrawingActivity extends BaseActivity {
             );
             drawingViewModel.buildVideo("Hello", setting.fps);
         });
-        //new frame
-        binding.newFrame.setOnClickListener(v -> {
-            binding.drawingView.clearAndSaveBitmap();
-            testList.clear();
-            testList.addAll(binding.drawingView.getListBitmaps());
-            adapter.notifyDataSetChanged();
-
-        });
         //erase
         binding.erase.setOnClickListener(v -> binding.drawingView.setErase(true));
         //brush
@@ -151,6 +146,16 @@ public class DrawingActivity extends BaseActivity {
                 }
             }
         });
+
+        onAddFrameClickListener = new FrameRVAdapter.OnAddFrameClickListener() {
+            @Override
+            public void onAddFrame() {
+                binding.drawingView.clearAndSaveBitmap();
+                adapter.updateFrameList(
+                        binding.drawingView.getListBitmaps()
+                );
+            }
+        };
 
     }
 

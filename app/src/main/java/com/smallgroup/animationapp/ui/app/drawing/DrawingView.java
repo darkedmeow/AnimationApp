@@ -66,7 +66,7 @@ public class DrawingView extends View {
         prevFramePaint = new Paint();
 
         backgroundColor = Color.WHITE;
-        paintColor = Color.BLUE;
+        paintColor = Color.BLACK;
         strokeWidth = 20;
         erase = false;
         isCanRedo = false;

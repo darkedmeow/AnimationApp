@@ -5,6 +5,7 @@
     <color name="orange_200">#ffd54f</color>
     <color name="orange_500">#ffc107</color>
     <color name="gray">#E6E6E6</color>
+    <color name="red_material">#FF5252</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
