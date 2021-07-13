@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class FrameRVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     Activity context;
-    ArrayList<Bitmap> frames;
+    private ArrayList<Bitmap> frames;
 
     private final int VIEW_TYPE_FOOTER = 2;
     private final int VIEW_TYPE_FRAME = 1;

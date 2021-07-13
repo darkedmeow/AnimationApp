@@ -8,30 +8,29 @@
             name="viewModel"
             type="com.smallgroup.animationapp.ui.app.video.VideoPLayerViewModel" />
     </data>
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/videoLayer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/border"
+            android:layout_centerHorizontal="true"
             android:layout_marginHorizontal="80dp"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="64dp"
-            android:background="@drawable/border"
-            android:elevation="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_marginBottom="10dp"
+            android:elevation="8dp">
 
             <VideoView
                 android:id="@+id/video"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
+                android:layout_centerInParent="true"
                 android:orientation="horizontal" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <Button
             android:id="@+id/share"
@@ -41,10 +40,7 @@
             android:layout_marginHorizontal="200dp"
             android:text="Поделиться"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/videoLayer" />
+            android:layout_below="@id/videoLayer" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 </layout>

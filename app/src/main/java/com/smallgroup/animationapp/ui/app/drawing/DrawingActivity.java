@@ -64,9 +64,11 @@ public class DrawingActivity extends BaseActivity {
 
         testList = new ArrayList<Bitmap>();
 
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
+
         binding.framesList.setNestedScrollingEnabled(false);
         binding.framesList.setLayoutManager(
-                new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
+                linearLayoutManager
         );
         adapter = new FrameRVAdapter(
                 this,
@@ -153,6 +155,9 @@ public class DrawingActivity extends BaseActivity {
                 binding.drawingView.clearAndSaveBitmap();
                 adapter.updateFrameList(
                         binding.drawingView.getListBitmaps()
+                );
+                binding.framesList.scrollToPosition(
+                        adapter.getItemCount() - 1
                 );
             }
         };
