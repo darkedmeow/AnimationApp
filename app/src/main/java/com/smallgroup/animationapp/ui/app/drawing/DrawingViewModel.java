@@ -51,9 +51,11 @@ public class DrawingViewModel extends AndroidViewModel {
         //path of video
         String out = fileManager.createVideo(title);
 
-        //String[] cmd= new String[]{"-framerate", String.valueOf(fps), "-i", pictures, "-vf", "scale=720:480", "-y", out};
         String[] cmd= new String[]{"-framerate", String.valueOf(fps), "-i", pictures, "-vcodec", "mpeg4", "-s", "720x480", "-y", out};
 
+
+        //TODO
+        //Create a class for building project from list of bitmap
         long executionId = FFmpeg.executeAsync(cmd, new ExecuteCallback() {
 
             @Override

@@ -57,10 +57,9 @@ public class FileManager {
 
         // get the path of the video file created in the storage.
         return videoFile.getAbsolutePath();
-        //return getRealPathFromUR(uri);
         }
 
-
+    //Delete
     public String getRealPathFromUR(Uri contentUri) {
         Cursor cursor = null;
         try {
@@ -102,9 +101,7 @@ public class FileManager {
                 FileOutputStream outputStream = null;
                 try {
                     outputStream = new FileOutputStream(path);
-                    //here is set your file path where you want to save or also here you can set file object directly
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-                    // bitmap is your Bitmap instance, if you want to compress it you can compress reduce percentage
                     // PNG is a lossless format, the compression factor (100) is ignored
                 } catch (Exception e) {
                     e.printStackTrace();

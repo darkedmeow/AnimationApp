@@ -3,4 +3,8 @@
     <!--    <string name="default_web_client_id">808237832973-rl2rojjcvq2mtbr970a0mmet20kj8bec.apps.googleusercontent.com</string>-->
     <string name="logo">logo</string>
     <string name="sign_in">Войти с помощью Google</string>
+    <string name="share">Поделиться</string>
+    <string name="fps">FPS:</string>
+    <string name="project_title">Название проекта:</string>
+    <string name="create">Создать</string>
 </resources>
