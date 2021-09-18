@@ -1,4 +1,4 @@
-package com.smallgroup.animationapp.domain.model;
+package com.smallgroup.animationapp.utils;
 
 import android.content.ContentValues;
 import android.content.Context;

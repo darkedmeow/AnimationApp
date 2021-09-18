@@ -11,7 +11,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.arthenica.mobileffmpeg.Config;
 import com.arthenica.mobileffmpeg.ExecuteCallback;
 import com.arthenica.mobileffmpeg.FFmpeg;
-import com.smallgroup.animationapp.domain.model.FileManager;
+import com.smallgroup.animationapp.utils.FileManager;
 
 import java.io.File;
 import java.util.ArrayList;

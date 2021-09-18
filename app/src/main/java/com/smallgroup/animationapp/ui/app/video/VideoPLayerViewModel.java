@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
-import com.smallgroup.animationapp.domain.model.FileManager;
+import com.smallgroup.animationapp.utils.FileManager;
 
 public class VideoPLayerViewModel extends AndroidViewModel {
 
