@@ -8,9 +8,16 @@ public class DrawnPath {
     private Paint paint;
     private Path path;
 
+    public DrawnPath() {}
+
     public DrawnPath(Paint paint, Path path) {
         this.paint = paint;
         this.path = path;
+    }
+
+    public DrawnPath(DrawnPath drawnPath) {
+        this.paint = drawnPath.getPaint();
+        this.path = drawnPath.getPath();
     }
 
     public Paint getPaint() {

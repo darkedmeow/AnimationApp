@@ -128,14 +128,14 @@ public class DrawingActivity extends BaseActivity {
             drawingViewModel.buildVideo("Hello", setting.fps);
         });
         //erase
-        binding.erase.setOnClickListener(v -> binding.drawingView.setErase(true));
+        binding.erase.setOnClickListener(v -> binding.drawingView.turnOnErase());
         //brush
         binding.brush.setOnClickListener(v -> {
-            binding.drawingView.brush();
+            binding.drawingView.setBrush();
         });
         //pen
         binding.pencil.setOnClickListener(v -> {
-            binding.drawingView.pen();
+            binding.drawingView.setPen();
         });
 
         drawingViewModel.isComplete.observe(this, new Observer<Boolean>() {
