@@ -13,7 +13,8 @@ public abstract class AppDatabase extends RoomDatabase {
     public AppDatabase() {}
     public abstract UserProjectDao userProjectDao();
 
-    public AppDatabase getInstance(Context context) {
+    //TODO taken to another class
+    public static AppDatabase getInstance(Context context) {
         if (db == null) {
             db = Room.databaseBuilder(context, AppDatabase.class, "anim-db").build();
         }

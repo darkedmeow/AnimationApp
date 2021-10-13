@@ -2,7 +2,6 @@ package com.smallgroup.animationapp.ui.app.drawing;
 
 import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,6 +11,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
 
@@ -29,7 +29,6 @@ public class DrawingActivity extends BaseActivity {
     private ActivityDrawingBinding binding;
     private DrawingViewModel drawingViewModel;
 
-    private MutableLiveData<Boolean> isShow = new MutableLiveData<>();
 
     private ProjectSetting setting;
     private FrameRVAdapter adapter;
@@ -37,7 +36,9 @@ public class DrawingActivity extends BaseActivity {
 
     private Bundle bundle;
 
-    private ArrayList<Bitmap> testList;
+    private boolean isShowTools;
+
+    private ArrayList<Bitmap> tempList;
 
     private static final int YOUR_PERMISSION_STATIC_CODE_IDENTIFIER = 101;
 
@@ -52,17 +53,16 @@ public class DrawingActivity extends BaseActivity {
         initBinding();
         initDrawingViewModel();
         initListeners();
-        getSetting();
-        initAdapters();
+        getSettingFromBundle();
+        prepareAdapter();
 
-        isShow.setValue(true);
-        binding.setIsShow(isShow);
+        isShowTools = true;
 
     }
 
-    private void initAdapters() {
+    private void prepareAdapter() {
 
-        testList = new ArrayList<Bitmap>();
+        tempList = new ArrayList<Bitmap>();
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
 
@@ -72,14 +72,14 @@ public class DrawingActivity extends BaseActivity {
         );
         adapter = new FrameRVAdapter(
                 this,
-                testList,
+                tempList,
                 onAddFrameClickListener
         );
         binding.framesList.setAdapter(adapter);
 
     }
 
-    private void getSetting() {
+    private void getSettingFromBundle() {
         bundle = getIntent().getExtras();
 
         if (bundle != null) {
@@ -95,28 +95,75 @@ public class DrawingActivity extends BaseActivity {
 
     private void initDrawingViewModel() {
         drawingViewModel = ViewModelProviders.of(this).get(DrawingViewModel.class);
-        if (drawingViewModel != null) {
-            binding.setViewModel(drawingViewModel);
+        binding.setViewModel(drawingViewModel);
+    }
+
+    private void editBarAnim(View chooseView) {
+        View view;
+        int count = binding.editbar.getChildCount();
+        for (int i = 0; i < count; i++) {
+            view = binding.editbar.getChildAt(i);
+            if (view.getId() == chooseView.getId()){
+                view.animate()
+                        .scaleX(1.3f)
+                        .scaleY(1.3f)
+                        .setDuration(100);
+            }
+            else {
+                view.animate()
+                        .scaleX(1f)
+                        .scaleY(1f)
+                        .setDuration(100);
+            }
         }
     }
 
     private void initListeners() {
 
-        //undo
+        //create new method for it
+        binding.editbar.getChildAt(0).animate()
+                .scaleX(1.3f)
+                .scaleY(1.3f)
+                .setDuration(200);
+        /////////////////////////////////////////////////////
+
         binding.undo.setOnClickListener(v -> {
-            //showMessage("undo");
             binding.drawingView.undo();
         });
-        //redo
+
         binding.redo.setOnClickListener(v -> {
-            //showMessage("redo");
             binding.drawingView.redo();
 
         });
-        //show/hide
+
         binding.hideEditbar.setOnClickListener(v ->
         {
-            isShow.setValue(!isShow.getValue());
+            if (isShowTools) {
+                binding.editbar.animate()
+                        .translationX(-binding.editbar.getWidth())
+                        .alpha(0.0f)
+                        .setDuration(200);
+
+                binding.framesList.animate()
+                        .translationY(binding.editbar.getHeight())
+                        .alpha(0.0f)
+                        .setDuration(200);
+
+                binding.hideEditbar.setImageResource(R.drawable.icons8_closed_eye_64);
+            }
+            else {
+                binding.editbar.animate()
+                        .translationX(0)
+                        .alpha(1.0f)
+                        .setDuration(200);
+
+                binding.framesList.animate()
+                        .translationY(0)
+                        .alpha(1.0f)
+                        .setDuration(200);
+            }
+            binding.hideEditbar.setImageResource(R.drawable.icons8_eye_64);
+            isShowTools = !isShowTools;
         });
         //saving and video building
         binding.saveProject.setOnClickListener(v -> {
@@ -127,14 +174,19 @@ public class DrawingActivity extends BaseActivity {
             );
             drawingViewModel.buildVideo("Hello", setting.fps);
         });
-        //erase
-        binding.erase.setOnClickListener(v -> binding.drawingView.turnOnErase());
-        //brush
+
+        binding.erase.setOnClickListener(v -> {
+            editBarAnim(v);
+            binding.drawingView.turnOnErase();
+        });
+
         binding.brush.setOnClickListener(v -> {
+            editBarAnim(v);
             binding.drawingView.setBrush();
         });
-        //pen
+
         binding.pencil.setOnClickListener(v -> {
+            editBarAnim(v);
             binding.drawingView.setPen();
         });
 
@@ -149,17 +201,14 @@ public class DrawingActivity extends BaseActivity {
             }
         });
 
-        onAddFrameClickListener = new FrameRVAdapter.OnAddFrameClickListener() {
-            @Override
-            public void onAddFrame() {
-                binding.drawingView.clearAndSaveBitmap();
-                adapter.updateFrameList(
-                        binding.drawingView.getListBitmaps()
-                );
-                binding.framesList.scrollToPosition(
-                        adapter.getItemCount() - 1
-                );
-            }
+        onAddFrameClickListener = () -> {
+            binding.drawingView.clearAndSaveBitmap();
+            adapter.updateFrameList(
+                    binding.drawingView.getListBitmaps()
+            );
+            binding.framesList.scrollToPosition(
+                    adapter.getItemCount() - 1
+            );
         };
 
     }

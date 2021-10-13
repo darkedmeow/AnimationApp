@@ -39,7 +39,6 @@ public class ProjectCreationViewModel extends ViewModel {
         ArrayList<Integer> intList = new ArrayList<Integer>(ints.length);
         for (int i : ints)
         {
-            //Log.d("RES", String.valueOf(i));
             intList.add(i);
         }
         colorsLiveData.setValue(intList);

@@ -1,6 +1,5 @@
 package com.smallgroup.animationapp.ui.app;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -25,7 +24,7 @@ public class ProjectCreationActivity extends BaseActivity {
     private ActivityProjectCreationBinding binding;
 
     private FonRecyclerViewAdapter adapter;
-    Activity context;
+    private Activity context;
     private FonRecyclerViewAdapter.OnColorClickListener onColorClickListener;
 
     @Override
@@ -66,34 +65,14 @@ public class ProjectCreationActivity extends BaseActivity {
 
     private void initListeners() {
         binding.createBtn.setOnClickListener(v -> {
-            //showMessage(projectCreationViewModel.info());
             Intent intent = new Intent(this, DrawingActivity.class);
             intent.putExtra(
                     ProjectSetting.class.getSimpleName(),
                     projectCreationViewModel.setting.getValue()
             );
-//            intent.putExtra(
-//                    "title",
-//                    projectCreationViewModel.setting.getValue().title
-//            );
-//            intent.putExtra(
-//                    "fps",
-//                    projectCreationViewModel.setting.getValue().fps
-//            );
-//            intent.putExtra(
-//                    "color",
-//                    projectCreationViewModel.setting.getValue().getColor()
-//            );
             startActivity(intent);
         });
 
-        //select color
-        onColorClickListener = new FonRecyclerViewAdapter.OnColorClickListener() {
-            @Override
-            public void onColorSelect(int color, int position) {
-                //showMessage("Select color " + color);
-                projectCreationViewModel.setColor(color);
-            }
-        };
+        onColorClickListener = (color, position) -> projectCreationViewModel.setColor(color);
     }
 }

@@ -19,6 +19,9 @@ public class UserProject {
     @ColumnInfo(name = "title")
     public String title;
 
+    @ColumnInfo(name = "fps")
+    public int fps;
+
     @ColumnInfo(name = "frames", typeAffinity = ColumnInfo.BLOB)
     @TypeConverters(Converter.class)
     public List<Frame> frames;

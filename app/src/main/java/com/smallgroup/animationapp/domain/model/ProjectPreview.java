@@ -7,6 +7,13 @@ public class ProjectPreview {
     private String title;
     private Uri imgIcon;
 
+    public ProjectPreview() {
+    }
+
+    public ProjectPreview(String title) {
+        this.title = title;
+    }
+
     public String getTitle() {
         return title;
     }
