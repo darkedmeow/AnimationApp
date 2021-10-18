@@ -35,13 +35,13 @@ public class ProjectCreationViewModel extends ViewModel {
         return projectSetting.info();
     }
 
-    public void populateList(int[] ints){
-        ArrayList<Integer> intList = new ArrayList<Integer>(ints.length);
+    public void populateColors(int[] ints){
+        ArrayList<Integer> colorsByInt = new ArrayList<Integer>(ints.length);
         for (int i : ints)
         {
-            intList.add(i);
+            colorsByInt.add(i);
         }
-        colorsLiveData.setValue(intList);
+        colorsLiveData.setValue(colorsByInt);
     }
 
 }

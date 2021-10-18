@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.smallgroup.animationapp.App;
 import com.smallgroup.animationapp.db.AppDatabase;
 import com.smallgroup.animationapp.domain.model.ProjectPreview;
 
@@ -23,7 +24,7 @@ public class MenuViewModel extends AndroidViewModel {
         super(application);
         projectsLiveData = new MutableLiveData<>();
         projectsList = new ArrayList<>();
-        db = AppDatabase.getInstance(application);
+        db = App.getInstance().getDatabase();
         init();
     }
 
@@ -42,7 +43,7 @@ public class MenuViewModel extends AndroidViewModel {
         ProjectPreview blank = new ProjectPreview();
         blank.setTitle("Blank");
 
-        ArrayList<String> projectTitleFromDb = (ArrayList<String>) db.userProjectDao().getAllProjectTitle().getValue();
+        ArrayList<String> projectTitleFromDb = (ArrayList<String>) db.userProjectDao().getAllProjectTitle();
         projectTitleFromDb.forEach(one -> {
             projectsList.add(new ProjectPreview(one));
         });

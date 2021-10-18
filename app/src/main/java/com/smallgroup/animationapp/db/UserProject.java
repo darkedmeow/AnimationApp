@@ -27,5 +27,13 @@ public class UserProject {
     public List<Frame> frames;
 
 
+    public UserProject() {
+    }
 
+    public UserProject(int uid, String title, int fps, List<Frame> frames) {
+        this.uid = uid;
+        this.title = title;
+        this.fps = fps;
+        this.frames = frames;
+    }
 }

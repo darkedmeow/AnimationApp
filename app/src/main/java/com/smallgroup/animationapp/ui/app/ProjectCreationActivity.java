@@ -38,7 +38,7 @@ public class ProjectCreationActivity extends BaseActivity {
         initViewModel();
         initListeners();
 
-        projectCreationViewModel.populateList(
+        projectCreationViewModel.populateColors(
                 this.getResources().getIntArray(R.array.colors)
         );
 
@@ -71,6 +71,11 @@ public class ProjectCreationActivity extends BaseActivity {
                     projectCreationViewModel.setting.getValue()
             );
             startActivity(intent);
+        });
+
+        //For testing. After delete
+        projectCreationViewModel.setting.observe(this, projectSetting -> {
+            showMessage(projectSetting.title);
         });
 
         onColorClickListener = (color, position) -> projectCreationViewModel.setColor(color);
