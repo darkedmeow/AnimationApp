@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.room.TypeConverter;
 
+import com.smallgroup.animationapp.domain.model.DrawnPath;
 import com.smallgroup.animationapp.domain.model.Frame;
 
 import java.io.ByteArrayInputStream;
@@ -29,6 +30,49 @@ public class Converter {
         catch (IOException e) {
             System.out.println("IO 1");
             return new byte[]{};
+        }
+
+
+    }
+
+    @TypeConverter
+    public static byte[] listToByte2(List<DrawnPath> list) {
+        try {
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(bos);
+            oos.writeObject(list);
+            byte[] bytes = bos.toByteArray();
+            System.out.println("complete to byte");
+            return bytes;
+        }
+        catch (IOException e) {
+            System.out.println("IO 1");
+            return new byte[]{};
+        }
+
+
+    }
+
+    @TypeConverter
+    public static List<DrawnPath> byteToList2(byte[] obj) {
+
+        try {
+            ByteArrayInputStream bos = new ByteArrayInputStream(obj);
+            ObjectInputStream oos = new ObjectInputStream(bos);
+            List<DrawnPath> list = (List<DrawnPath>) oos.readObject();
+//            Log.d("Status", "Success");
+            System.out.println("complete to list");
+            return list;
+        }
+        catch (IOException e) {
+//            Log.d("Status", "IO Ex");
+            System.out.println("IO");
+            return new ArrayList<DrawnPath>();
+        }
+        catch (ClassNotFoundException e) {
+            System.out.println("ex");
+//            Log.d("Status", "CNFE Ex");
+            return new ArrayList<DrawnPath>();
         }
 
 

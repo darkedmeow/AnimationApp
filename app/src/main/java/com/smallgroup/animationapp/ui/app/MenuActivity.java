@@ -43,7 +43,7 @@ public class MenuActivity extends BaseActivity {
         initListeners();
 
         context = this;
-        menuViewModel.getProjectsLiveData().observe(context, new Observer<ArrayList<ProjectPreview>>() {
+        menuViewModel.getProjectsLiveData().observeForever(new Observer<ArrayList<ProjectPreview>>() {
             @Override
             public void onChanged(ArrayList<ProjectPreview> projectPreviews) {
                 adapter = new RecyclerViewAdapter(context, projectPreviews);

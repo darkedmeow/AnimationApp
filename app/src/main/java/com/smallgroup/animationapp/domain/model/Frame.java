@@ -1,12 +1,16 @@
 package com.smallgroup.animationapp.domain.model;
 
+import androidx.room.TypeConverters;
+
+import com.smallgroup.animationapp.utils.Converter;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Frame implements Serializable {
 
+    @TypeConverters(Converter.class)
     private ArrayList<DrawnPath> paths;
-    private int n;
 
     public Frame() {
         paths = new ArrayList<>();
@@ -24,11 +28,4 @@ public class Frame implements Serializable {
         this.paths = paths;
     }
 
-    public int getN() {
-        return n;
-    }
-
-    public void setN(int n) {
-        this.n = n;
-    }
 }

@@ -170,7 +170,8 @@ public class DrawingActivity extends BaseActivity {
             binding.drawingView.clearAndSaveBitmap();
             binding.progressBar.setVisibility(ProgressBar.VISIBLE);
             drawingViewModel.save(
-                    binding.drawingView.getListBitmaps()
+                    binding.drawingView.getListBitmaps(),
+                    binding.drawingView.getFrames()
             );
             drawingViewModel.buildVideo("Hello", setting.fps);
         });

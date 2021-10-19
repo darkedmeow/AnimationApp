@@ -1,6 +1,7 @@
 package com.smallgroup.animationapp.repository;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
@@ -33,12 +34,10 @@ public class RoomRepository {
     public static final String KEY_ID = "KEY_ID";
     public static final String KEY_FRAMES = "KEY_FRAMES";
 
-    private AppDatabase db;
     private Application context;
 
     public RoomRepository(Application application) {
         this.context = application;
-        db = App.getInstance().getDatabase();
     }
 
     public MutableLiveData<Long> insert(UserProject project) {
@@ -49,7 +48,7 @@ public class RoomRepository {
         WorkManager.getInstance(context).enqueue(insertOneTimeRequest);
         WorkManager.getInstance(context)
                 .getWorkInfoByIdLiveData(insertOneTimeRequest.getId())
-                .observe((LifecycleOwner) this, new Observer<WorkInfo>() {
+                .observeForever(new Observer<WorkInfo>() {
                     @Override
                     public void onChanged(WorkInfo info) {
                         if (info != null && info.getState().isFinished()) {
@@ -69,26 +68,26 @@ public class RoomRepository {
         WorkManager.getInstance(context).enqueue(updateRequest);
     }
 
-    public MutableLiveData<List<Frame>> getListFrameById(int id) {
-        MutableLiveData<List<Frame>> framesLiveData = new MutableLiveData<>();
-        Data data = new Data.Builder().putInt(KEY_ID, id).build();
-        WorkRequest getListFrames = new OneTimeWorkRequest.Builder(SelectWorker.class)
-                .setInputData(data)
-                .build();
-        WorkManager.getInstance(context).enqueue(getListFrames);
-
-        WorkManager.getInstance(context).getWorkInfoByIdLiveData(getListFrames.getId())
-                .observe((LifecycleOwner) this, new Observer<WorkInfo>() {
-                    @Override
-                    public void onChanged(WorkInfo info) {
-                        if (info != null && info.getState().isFinished()) {
-                            byte[] frames = info.getOutputData().getByteArray(KEY_FRAMES);
-                            framesLiveData.postValue(Converter.byteToList(frames));
-                        }
-                    }
-                });
-        return framesLiveData;
-    }
+//    public MutableLiveData<List<Frame>> getListFrameById(int id) {
+//        MutableLiveData<List<Frame>> framesLiveData = new MutableLiveData<>();
+//        Data data = new Data.Builder().putInt(KEY_ID, id).build();
+//        WorkRequest getListFrames = new OneTimeWorkRequest.Builder(SelectWorker.class)
+//                .setInputData(data)
+//                .build();
+//        WorkManager.getInstance(context).enqueue(getListFrames);
+//
+//        WorkManager.getInstance(context).getWorkInfoByIdLiveData(getListFrames.getId())
+//                .observe((LifecycleOwner) this, new Observer<WorkInfo>() {
+//                    @Override
+//                    public void onChanged(WorkInfo info) {
+//                        if (info != null && info.getState().isFinished()) {
+//                            byte[] frames = info.getOutputData().getByteArray(KEY_FRAMES);
+//                            framesLiveData.postValue(Converter.byteToList(frames));
+//                        }
+//                    }
+//                });
+//        return framesLiveData;
+//    }
 
     public MutableLiveData<List<TitleProject>> getAllProjectUidAndTitle() {
         MutableLiveData<List<TitleProject>> titleProjectList = new MutableLiveData<>();
@@ -97,7 +96,7 @@ public class RoomRepository {
         WorkManager.getInstance(context).enqueue(getAllTitleProject);
 
         WorkManager.getInstance(context).getWorkInfoByIdLiveData(getAllTitleProject.getId())
-                .observe((LifecycleOwner) this, new Observer<WorkInfo>() {
+                .observeForever(new Observer<WorkInfo>() {
                     @Override
                     public void onChanged(WorkInfo info) {
                         if (info != null && info.getState().isFinished()) {
@@ -105,12 +104,17 @@ public class RoomRepository {
                             String[] titile = info.getOutputData().getStringArray(GetAllProjectWorker.TITLES);
 
                             //TODO ПЕРЕПИСАТЬ ЭТОТ УЖАС
-                            List<TitleProject> list = new ArrayList<>();
-                            if (titile != null) {
-                                for (int i = 0; i < titile.length; i++) {
-                                    list.add(new TitleProject(titile[i], uid[i]));
+                            try {
+                                List<TitleProject> list = new ArrayList<>();
+                                if (titile != null) {
+                                    for (int i = 0; i < titile.length; i++) {
+                                        list.add(new TitleProject(titile[i], uid[i]));
+                                    }
+                                    titleProjectList.postValue(list);
                                 }
-                                titleProjectList.postValue(list);
+                            }
+                            catch (Exception exception) {
+                                titleProjectList.postValue(new ArrayList<>());
                             }
                         }
                     }

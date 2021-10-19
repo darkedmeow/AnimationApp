@@ -3,7 +3,9 @@ package com.smallgroup.animationapp.domain.model;
 import android.graphics.Paint;
 import android.graphics.Path;
 
-public class DrawnPath {
+import java.io.Serializable;
+
+public class DrawnPath implements Serializable {
 
     private Paint paint;
     private Path path;

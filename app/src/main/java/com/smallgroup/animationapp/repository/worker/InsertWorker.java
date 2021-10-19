@@ -9,6 +9,7 @@ import androidx.work.WorkerParameters;
 
 import com.smallgroup.animationapp.App;
 import com.smallgroup.animationapp.db.UserProject;
+import com.smallgroup.animationapp.repository.RoomRepository;
 
 public class InsertWorker extends Worker {
 
@@ -21,7 +22,8 @@ public class InsertWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-        long id = App.getInstance().getDatabase().userProjectDao().insert(new UserProject());
+        UserProject userProject = RoomRepository.convertDataToUserProject(getInputData());
+        long id = App.getInstance().getDatabase().userProjectDao().insert(userProject);
         Data output = new Data.Builder()
                                 .putLong(RESULT, id)
                                 .build();

@@ -16,6 +16,7 @@ import android.view.View;
 import androidx.annotation.Nullable;
 
 import com.smallgroup.animationapp.domain.model.DrawnPath;
+import com.smallgroup.animationapp.domain.model.Frame;
 
 import java.util.ArrayList;
 
@@ -28,6 +29,7 @@ public class DrawingView extends View {
     private ArrayList<Path> tempPaths;
 
     private ArrayList<DrawnPath> drawnPathList;
+    private ArrayList<Frame> frames;
 
     private int backgroundColor;
     private int paintColor;
@@ -52,6 +54,7 @@ public class DrawingView extends View {
     }
 
     private void init() {
+        frames = new ArrayList<>();
         listBitmaps = new ArrayList<>();
         tempPaths = new ArrayList<>();
         prevPaths = new ArrayList<>();
@@ -61,6 +64,10 @@ public class DrawingView extends View {
 
     public ArrayList<Bitmap> getListBitmaps() {
         return listBitmaps;
+    }
+
+    public ArrayList<Frame> getFrames() {
+        return frames;
     }
 
     private void setupDrawing() {
@@ -100,6 +107,7 @@ public class DrawingView extends View {
         prepareFrame();
         //save bitmap
         listBitmaps.add(Bitmap.createBitmap(canvasBitmap));
+        frames.add(new Frame(drawnPathList));
         //COLOR FON
         canvasBitmap.eraseColor(backgroundColor);
 

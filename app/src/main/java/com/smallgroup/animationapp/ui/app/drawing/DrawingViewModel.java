@@ -11,6 +11,9 @@ import androidx.lifecycle.MutableLiveData;
 import com.arthenica.mobileffmpeg.Config;
 import com.arthenica.mobileffmpeg.ExecuteCallback;
 import com.arthenica.mobileffmpeg.FFmpeg;
+import com.smallgroup.animationapp.db.UserProject;
+import com.smallgroup.animationapp.domain.model.Frame;
+import com.smallgroup.animationapp.repository.RoomRepository;
 import com.smallgroup.animationapp.utils.FileManager;
 
 import java.io.File;
@@ -22,17 +25,21 @@ import static com.arthenica.mobileffmpeg.Config.RETURN_CODE_SUCCESS;
 public class DrawingViewModel extends AndroidViewModel {
 
     private final FileManager fileManager;
+    private RoomRepository roomRepository;
     MutableLiveData<Boolean> isComplete = new MutableLiveData<>();
 
     public DrawingViewModel(@NonNull Application application) {
         super(application);
         fileManager = new FileManager(getApplication());
+        roomRepository = new RoomRepository(application);
     }
 
 
-    public void save(ArrayList<Bitmap> bitmapArrayList) {
+    public void save(ArrayList<Bitmap> bitmapArrayList, ArrayList<Frame> frames) {
         //TODO
         //Save in BD
+        UserProject project = new UserProject("hello", 10, frames);
+        roomRepository.insert(project);
 
         for (int i = 1; i <= bitmapArrayList.size(); i++) {
             fileManager.saveBitmap(

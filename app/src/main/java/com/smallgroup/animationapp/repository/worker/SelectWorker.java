@@ -23,15 +23,15 @@ public class SelectWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-        try {
-            int id = getInputData().getInt(RoomRepository.KEY_ID, 0);
-            List<Frame> frameList = App.getInstance().getDatabase().userProjectDao().getListFrameById(id);
-            byte[] frames = Converter.listToByte(frameList);
-            Data data = new Data.Builder().putByteArray(RoomRepository.KEY_FRAMES ,frames).build();
-            return Result.success(data);
-        }
-        catch (Exception ex) {
+//        try {
+//            int id = getInputData().getInt(RoomRepository.KEY_ID, 0);
+//            List<Frame> frameList = App.getInstance().getDatabase().userProjectDao().getListFrameById(id);
+//            byte[] frames = Converter.listToByte(frameList);
+//            Data data = new Data.Builder().putByteArray(RoomRepository.KEY_FRAMES ,frames).build();
+//            return Result.success(data);
+//        }
+//        catch (Exception ex) {
             return Result.failure();
-        }
+//        }
     }
 }
