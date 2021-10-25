@@ -50,10 +50,7 @@ public class MenuViewModel extends AndroidViewModel {
     }
 
     private void populateList() {
-        ProjectPreview project = new ProjectPreview();
-        project.setTitle("Мой");
-        ProjectPreview blank = new ProjectPreview();
-        blank.setTitle("Blank");
+
         MutableLiveData<List<TitleProject>> titleProjectMutableLiveData = roomRepository.getAllProjectUidAndTitle();
         titleProjectMutableLiveData.observeForever(new Observer<List<TitleProject>>() {
             @Override
@@ -65,8 +62,6 @@ public class MenuViewModel extends AndroidViewModel {
             }
         });
 
-        projectsList.add(project);
-        projectsList.add(blank);
 
     }
 

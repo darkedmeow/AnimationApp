@@ -29,4 +29,8 @@ public class VideoPLayerViewModel extends AndroidViewModel {
                 fileManager.getVideoFolderPath() + "/" + title + ".mp4"
         ));
     }
+
+    public String getPath(String title) {
+        return fileManager.getVideoFolderPath() + "/" + title + ".mp4";
+    }
 }

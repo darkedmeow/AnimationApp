@@ -4,7 +4,9 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Context;
 import android.content.Intent;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +23,8 @@ public class VideoPlayerActivity extends BaseActivity {
     private Bundle bundle;
     private ProjectSetting setting;
 
+    private Context context;
+
     private ActivityVideoPlayerBinding binding;
     private VideoPLayerViewModel viewModel;
     private Uri videoUri;
@@ -36,6 +40,8 @@ public class VideoPlayerActivity extends BaseActivity {
         initListeners();
 
         openVideo();
+
+        context = this;
 
     }
 
@@ -80,4 +86,6 @@ public class VideoPlayerActivity extends BaseActivity {
             startActivity(Intent.createChooser(share, "Message"));
         });
     }
+
+
 }

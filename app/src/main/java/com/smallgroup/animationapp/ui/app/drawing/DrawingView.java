@@ -137,6 +137,7 @@ public class DrawingView extends View {
         canvas.drawBitmap(canvasBitmap, 0, 0, canvasPaint);
 
         prevPaths.forEach(el -> canvas.drawPath(el.getPath(), el.getPaint()));
+        drawnPathList.forEach(drawnPath -> canvas.drawPath(drawnPath.getPath(), drawnPath.getPaint()));
         drawnPathList.forEach(drawnPath -> drawCanvas.drawPath(drawnPath.getPath(), drawnPath.getPaint()));
         tempPaths.forEach(path -> canvas.drawPath(path, drawPaint));
     }
