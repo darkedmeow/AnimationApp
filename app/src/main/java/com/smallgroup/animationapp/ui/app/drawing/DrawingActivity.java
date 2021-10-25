@@ -1,6 +1,7 @@
 package com.smallgroup.animationapp.ui.app.drawing;
 
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
@@ -50,6 +52,8 @@ public class DrawingActivity extends BaseActivity {
                 new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
                 YOUR_PERMISSION_STATIC_CODE_IDENTIFIER);
 
+        checkPermission();
+
         initBinding();
         initDrawingViewModel();
         initListeners();
@@ -58,6 +62,32 @@ public class DrawingActivity extends BaseActivity {
 
         isShowTools = true;
 
+    }
+
+    private void checkPermission() {
+        if (ContextCompat.checkSelfPermission(
+                this, Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
+                PackageManager.PERMISSION_GRANTED) {
+        } else {
+            // You can directly ask for the permission.
+            ActivityCompat.requestPermissions(this,
+                    new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE },
+                    YOUR_PERMISSION_STATIC_CODE_IDENTIFIER);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                           int[] grantResults) {
+        switch (requestCode) {
+            case YOUR_PERMISSION_STATIC_CODE_IDENTIFIER:
+                if (grantResults.length > 0 &&
+                        grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                }  else {
+                    finish();
+                }
+                return;
+        }
     }
 
     private void prepareAdapter() {
