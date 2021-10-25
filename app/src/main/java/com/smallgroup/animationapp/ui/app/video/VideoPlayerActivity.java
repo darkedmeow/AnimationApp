@@ -13,9 +13,13 @@ import android.widget.MediaController;
 
 import com.smallgroup.animationapp.R;
 import com.smallgroup.animationapp.databinding.ActivityVideoPlayerBinding;
+import com.smallgroup.animationapp.domain.model.ProjectSetting;
 import com.smallgroup.animationapp.ui.BaseActivity;
 
 public class VideoPlayerActivity extends BaseActivity {
+
+    private Bundle bundle;
+    private ProjectSetting setting;
 
     private ActivityVideoPlayerBinding binding;
     private VideoPLayerViewModel viewModel;
@@ -28,16 +32,26 @@ public class VideoPlayerActivity extends BaseActivity {
 
         initBinding();
         initDrawingViewModel();
+        getSettingFromBundle();
         initListeners();
 
         openVideo();
 
     }
 
+    private void getSettingFromBundle() {
+        bundle = getIntent().getExtras();
+
+        if (bundle != null) {
+            setting = (ProjectSetting) bundle.get(ProjectSetting.class.getSimpleName());
+        }
+    }
+
     private void openVideo() {
         MediaController mediaController = new MediaController(this);
         binding.video.setMediaController(mediaController);
         mediaController.setMediaPlayer(binding.video);
+        viewModel.setTitileVideo(setting.title);
         viewModel.videoUri.observe(this, s -> {
             videoUri = s;
             binding.video.setVideoURI(s);

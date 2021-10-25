@@ -173,7 +173,7 @@ public class DrawingActivity extends BaseActivity {
                     binding.drawingView.getListBitmaps(),
                     binding.drawingView.getFrames()
             );
-            drawingViewModel.buildVideo("Hello", setting.fps);
+            drawingViewModel.buildVideo(setting.title, setting.fps);
         });
 
         binding.erase.setOnClickListener(v -> {
@@ -197,6 +197,10 @@ public class DrawingActivity extends BaseActivity {
                 if (aBoolean) {
                     binding.progressBar.setVisibility(ProgressBar.GONE);
                     Intent intent = new Intent(getApplicationContext(), VideoPlayerActivity.class);
+                    intent.putExtra(
+                            ProjectSetting.class.getSimpleName(),
+                            setting
+                    );
                     startActivity(intent);
                 }
             }

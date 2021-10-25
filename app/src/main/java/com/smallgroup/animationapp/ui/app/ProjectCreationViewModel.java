@@ -3,6 +3,8 @@ package com.smallgroup.animationapp.ui.app;
 import android.app.Activity;
 import android.util.Log;
 
+import androidx.databinding.Bindable;
+import androidx.databinding.ObservableField;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -14,8 +16,8 @@ import java.util.List;
 public class ProjectCreationViewModel extends ViewModel {
 
     MutableLiveData<ArrayList<Integer>> colorsLiveData;
-    private ProjectSetting projectSetting;
-    public MutableLiveData<ProjectSetting> setting = new MutableLiveData<>();
+    private ProjectSetting setting;
+    public ObservableField<ProjectSetting> myset = new ObservableField<>(new ProjectSetting("kek", "10"));
 
     public ProjectCreationViewModel() {
         colorsLiveData = new MutableLiveData<>();
@@ -23,16 +25,15 @@ public class ProjectCreationViewModel extends ViewModel {
     }
 
     private void init() {
-        projectSetting = new ProjectSetting("hello", 10);
-        setting.setValue(projectSetting);
+
     }
 
     public void setColor(int color) {
-        projectSetting.setColor(color);
+        myset.get().setColor(color);
     }
 
     public String info() {
-        return projectSetting.info();
+        return myset.get().info();
     }
 
     public void populateColors(int[] ints){

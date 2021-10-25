@@ -21,8 +21,12 @@ public class VideoPLayerViewModel extends AndroidViewModel {
         fileManager = new FileManager(application);
 
 
+
+    }
+
+    public void setTitileVideo(String title) {
         videoUri.setValue(Uri.parse(
-                fileManager.getVideoFolderPath() + "/Hello.mp4"
+                fileManager.getVideoFolderPath() + "/" + title + ".mp4"
         ));
     }
 }

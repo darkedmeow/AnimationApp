@@ -27,6 +27,7 @@ public class ProjectCreationActivity extends BaseActivity {
     private Activity context;
     private FonRecyclerViewAdapter.OnColorClickListener onColorClickListener;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,10 +53,14 @@ public class ProjectCreationActivity extends BaseActivity {
             }
         });
 
+
+
     }
 
     private void initBinding() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_project_creation);
+        binding.setLifecycleOwner(this);
+
     }
 
     private void initViewModel() {
@@ -68,15 +73,12 @@ public class ProjectCreationActivity extends BaseActivity {
             Intent intent = new Intent(this, DrawingActivity.class);
             intent.putExtra(
                     ProjectSetting.class.getSimpleName(),
-                    projectCreationViewModel.setting.getValue()
+                    projectCreationViewModel.myset.get()
             );
             startActivity(intent);
+//            showMessage(projectCreationViewModel.info());
         });
 
-        //For testing. After delete
-        projectCreationViewModel.setting.observe(this, projectSetting -> {
-            showMessage(projectSetting.title);
-        });
 
         onColorClickListener = (color, position) -> projectCreationViewModel.setColor(color);
     }

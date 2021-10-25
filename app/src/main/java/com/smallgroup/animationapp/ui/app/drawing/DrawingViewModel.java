@@ -38,8 +38,8 @@ public class DrawingViewModel extends AndroidViewModel {
     public void save(ArrayList<Bitmap> bitmapArrayList, ArrayList<Frame> frames) {
         //TODO
         //Save in BD
-        UserProject project = new UserProject("hello", 10, frames);
-        roomRepository.insert(project);
+//        UserProject project = new UserProject("hello", 10, frames);
+//        roomRepository.insert(project);
 
         for (int i = 1; i <= bitmapArrayList.size(); i++) {
             fileManager.saveBitmap(
@@ -49,7 +49,7 @@ public class DrawingViewModel extends AndroidViewModel {
         }
     }
 
-    public void buildVideo(String title, int fps) {
+    public void buildVideo(String title, String fps) {
 
         //path of app folder
         String dirPath = fileManager.getVideoFolderPath();
@@ -58,7 +58,7 @@ public class DrawingViewModel extends AndroidViewModel {
         //path of video
         String out = fileManager.createVideo(title);
 
-        String[] cmd= new String[]{"-framerate", String.valueOf(fps), "-i", pictures, "-vcodec", "mpeg4", "-s", "720x480", "-y", out};
+        String[] cmd= new String[]{"-framerate", fps, "-i", pictures, "-vcodec", "mpeg4", "-s", "720x480", "-y", out};
 
 
         //TODO
