@@ -1,4 +1,4 @@
-package com.smallgroup.animationapp.ui.app;
+package com.smallgroup.animationapp.ui.app.menu;
 
 import android.app.Application;
 import android.util.Log;

@@ -1,6 +1,5 @@
-package com.smallgroup.animationapp.ui.app;
+package com.smallgroup.animationapp.ui.app.menu;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -9,7 +8,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -19,6 +17,7 @@ import com.smallgroup.animationapp.databinding.ActivityMenuBinding;
 import com.smallgroup.animationapp.domain.model.ProjectPreview;
 import com.smallgroup.animationapp.domain.model.User;
 import com.smallgroup.animationapp.ui.BaseActivity;
+import com.smallgroup.animationapp.ui.app.creating.ProjectCreationActivity;
 
 import java.util.ArrayList;
 

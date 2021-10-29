@@ -22,7 +22,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.smallgroup.animationapp.R;
 import com.smallgroup.animationapp.databinding.ActivityAuthBinding;
 import com.smallgroup.animationapp.domain.model.User;
-import com.smallgroup.animationapp.ui.app.MenuActivity;
+import com.smallgroup.animationapp.ui.app.menu.MenuActivity;
 
 public class AuthActivity extends AppCompatActivity {
 

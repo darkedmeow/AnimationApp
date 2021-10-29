@@ -9,7 +9,7 @@ import android.view.WindowManager;
 
 import com.smallgroup.animationapp.R;
 import com.smallgroup.animationapp.domain.model.User;
-import com.smallgroup.animationapp.ui.app.MenuActivity;
+import com.smallgroup.animationapp.ui.app.menu.MenuActivity;
 
 public class SplashActivity extends AppCompatActivity {
 

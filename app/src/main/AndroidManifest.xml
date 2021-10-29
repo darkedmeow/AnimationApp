@@ -26,7 +26,7 @@
 
         </activity>
         <activity
-            android:name=".ui.app.ProjectCreationActivity"
+            android:name=".ui.app.creating.ProjectCreationActivity"
             android:screenOrientation="landscape">
 
         </activity>
@@ -40,7 +40,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.app.MenuActivity"
+            android:name=".ui.app.menu.MenuActivity"
             android:screenOrientation="landscape">
 
         </activity>

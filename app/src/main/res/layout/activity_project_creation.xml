@@ -8,7 +8,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.smallgroup.animationapp.ui.app.ProjectCreationViewModel" />
+            type="com.smallgroup.animationapp.ui.app.creating.ProjectCreationViewModel" />
 
 
     </data>

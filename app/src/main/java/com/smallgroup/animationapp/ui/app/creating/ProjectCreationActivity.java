@@ -1,4 +1,4 @@
-package com.smallgroup.animationapp.ui.app;
+package com.smallgroup.animationapp.ui.app.creating;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;

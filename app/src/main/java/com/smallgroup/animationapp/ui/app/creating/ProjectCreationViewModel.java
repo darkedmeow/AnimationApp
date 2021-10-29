@@ -1,4 +1,4 @@
-package com.smallgroup.animationapp.ui.app;
+package com.smallgroup.animationapp.ui.app.creating;
 
 import android.app.Activity;
 import android.util.Log;
@@ -17,7 +17,7 @@ public class ProjectCreationViewModel extends ViewModel {
 
     MutableLiveData<ArrayList<Integer>> colorsLiveData;
     private ProjectSetting setting;
-    public ObservableField<ProjectSetting> myset = new ObservableField<>(new ProjectSetting("kek", "10"));
+    public ObservableField<ProjectSetting> myset = new ObservableField<>(new ProjectSetting("project", "10"));
 
     public ProjectCreationViewModel() {
         colorsLiveData = new MutableLiveData<>();

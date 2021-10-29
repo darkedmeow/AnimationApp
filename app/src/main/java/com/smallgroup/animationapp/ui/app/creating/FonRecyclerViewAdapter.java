@@ -1,4 +1,4 @@
-package com.smallgroup.animationapp.ui.app;
+package com.smallgroup.animationapp.ui.app.creating;
 
 import android.app.Activity;
 import android.graphics.Color;
